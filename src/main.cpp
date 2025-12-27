@@ -1,12 +1,19 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <cstdlib>
+
+struct Player
+{
+	float x, y, speed;
+};
 
 void ProcessInput();
 
-void Update(float);
+void Update(Player&, float);
 
-void Render(int);
+void Render(const Player&, int);
+
 
 int main()
 {
@@ -18,6 +25,11 @@ int main()
 	
 	auto lastTime = clock::now();
 	
+	Player player;
+	player.x = 0.0f;
+	player.y = 0.0f;
+	player.speed = 2.0f;
+	
 	while (running)
 	{
 		auto currentTime = clock::now();
@@ -26,8 +38,8 @@ int main()
 		lastTime = currentTime;
 		
 		ProcessInput();
-		Update(deltaTime);
-		Render(frame++);
+		Update(player, deltaTime);
+		Render(player, frame++);
 		
 		
 		std::this_thread::sleep_for(
@@ -42,12 +54,15 @@ void ProcessInput(){
 
 }
 
-void Update(float deltaTime){
-	std::cout << "Delta: " << deltaTime << std::endl;
+void Update(Player& player, float deltaTime){
+	player.x += player.speed * deltaTime;
 }
 
-void Render(int frame){
+void Render(const Player& player, int frame){
 	std::cout << "Frame: " << frame << std::endl;
+	std::cout << "Player position: (" 
+	          << player.x << ", "
+			  << player.y << ")" << std::endl;
 }
 
 
