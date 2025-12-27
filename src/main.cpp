@@ -14,6 +14,7 @@ void Update(Player&, float);
 
 void Render(const Player&, int);
 
+void ClearScreen();
 
 int main()
 {
@@ -39,6 +40,7 @@ int main()
 		
 		ProcessInput();
 		Update(player, deltaTime);
+		ClearScreen();
 		Render(player, frame++);
 		
 		
@@ -63,6 +65,11 @@ void Render(const Player& player, int frame){
 	std::cout << "Player position: (" 
 	          << player.x << ", "
 			  << player.y << ")" << std::endl;
+}
+
+void ClearScreen()
+{
+	std::system("clear");
 }
 
 
