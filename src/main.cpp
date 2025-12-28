@@ -5,12 +5,24 @@
 
 struct Player
 {
-	float x, y, speed;
+	int x, y;
 };
+
+enum inputDirection {
+	None,
+	Up,
+	Down,
+	Left,
+	Right
+};
+
+inputDirection currentDirection = None;
+
+const int gridWidth = 25, gridHeight = 15;
 
 void ProcessInput();
 
-void Update(Player&, float);
+void Update(Player&);
 
 void Render(const Player&, int);
 
@@ -21,25 +33,14 @@ int main()
 	bool running = true;
 	int frame = 0;
 	constexpr int FRAME_DELAY_MS = 500;
-
-	using clock = std::chrono::steady_clock;
 	
-	auto lastTime = clock::now();
-	
-	Player player;
-	player.x = 0.0f;
-	player.y = 0.0f;
-	player.speed = 2.0f;
+	Player player{0, 0};
 	
 	while (running)
 	{
-		auto currentTime = clock::now();
-		std::chrono::duration<float> delta = currentTime - lastTime;
-		float deltaTime = delta.count();
-		lastTime = currentTime;
 		
 		ProcessInput();
-		Update(player, deltaTime);
+		Update(player);
 		ClearScreen();
 		Render(player, frame++);
 		
@@ -53,11 +54,48 @@ int main()
 }
 
 void ProcessInput(){
-
+	char input;
+	std::cin >> input;
+	switch (input){
+		case 'w':
+			currentDirection = Up;
+			break;
+		case 'a':
+			currentDirection = Left;
+			break;
+		case 's':
+			currentDirection = Down;
+			break;
+		case 'd':
+			currentDirection = Right;
+			break;
+		default:
+			currentDirection = None;
+	}
 }
 
-void Update(Player& player, float deltaTime){
-	player.x += player.speed * deltaTime;
+void Update(Player& player){
+	switch(currentDirection) {
+		case Up: // Up
+			if(player.y >= 1)
+				player.y -= 1;
+			break;
+		case Down: // Down
+			if(player.y < gridHeight - 1)
+				player.y += 1;
+			break;
+		case Left: // Left
+			if(player.x >= 1)
+				player.x -= 1;
+			break;
+		case Right: // Right
+			if(player.x < gridWidth - 1)
+				player.x += 1;
+			break;
+		case None:
+			break;
+	}
+	currentDirection = None;
 }
 
 void Render(const Player& player, int frame){
