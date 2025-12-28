@@ -1,3 +1,6 @@
+// Console-based game engine prototype
+// Focus: game loop, input intent, grid movement
+
 #include <iostream>
 #include <thread>
 #include <chrono>
