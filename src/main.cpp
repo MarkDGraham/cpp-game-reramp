@@ -12,16 +12,39 @@ struct Player
 };
 
 enum inputDirection {
-	None,
-	Up,
-	Down,
-	Left,
-	Right
+	Input_None,
+	Input_Up,
+	Input_Down,
+	Input_Left,
+	Input_Right
 };
 
-inputDirection currentDirection = None;
+inputDirection currentDirection = Input_None;
 
 const int gridWidth = 25, gridHeight = 15;
+
+enum worldTile {
+	Tile_Wall,
+	Tile_Empty
+};
+
+worldTile worldGrid[gridHeight][gridWidth] = {
+{Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
+{Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall}
+}; 
 
 void ProcessInput();
 
@@ -37,7 +60,7 @@ int main()
 	int frame = 0;
 	constexpr int FRAME_DELAY_MS = 500;
 	
-	Player player{0, 0};
+	Player player{1, 1};
 	
 	while (running)
 	{
@@ -61,44 +84,44 @@ void ProcessInput(){
 	std::cin >> input;
 	switch (input){
 		case 'w':
-			currentDirection = Up;
+			currentDirection = Input_Up;
 			break;
 		case 'a':
-			currentDirection = Left;
+			currentDirection = Input_Left;
 			break;
 		case 's':
-			currentDirection = Down;
+			currentDirection = Input_Down;
 			break;
 		case 'd':
-			currentDirection = Right;
+			currentDirection = Input_Right;
 			break;
 		default:
-			currentDirection = None;
+			currentDirection = Input_None;
 	}
 }
 
 void Update(Player& player){
-	switch(currentDirection) {
-		case Up: // Up
-			if(player.y >= 1)
-				player.y -= 1;
-			break;
-		case Down: // Down
-			if(player.y < gridHeight - 1)
-				player.y += 1;
-			break;
-		case Left: // Left
-			if(player.x >= 1)
-				player.x -= 1;
-			break;
-		case Right: // Right
-			if(player.x < gridWidth - 1)
-				player.x += 1;
-			break;
-		case None:
-			break;
+		int targetX = player.x;
+	int targetY = player.y;
+
+	switch (currentDirection)
+	{
+		case Input_Up:    targetY--; break;
+		case Input_Down:  targetY++; break;
+		case Input_Left:  targetX--; break;
+		case Input_Right: targetX++; break;
+		default: break;
 	}
-	currentDirection = None;
+
+	if (targetX >= 0 && targetX < gridWidth &&
+	    targetY >= 0 && targetY < gridHeight &&
+	    worldGrid[targetY][targetX] == Tile_Empty)
+	{
+		player.x = targetX;
+		player.y = targetY;
+	}
+
+	currentDirection = Input_None;
 }
 
 void Render(const Player& player, int frame){
@@ -112,6 +135,3 @@ void ClearScreen()
 {
 	std::system("clear");
 }
-
-
-

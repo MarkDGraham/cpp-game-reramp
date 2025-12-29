@@ -28,4 +28,5 @@ a Software Development Engineer role, with emphasis on game engine fundamentals.
 ```bash
 g++ -std=c++17 src/main.cpp -o game
 ./game
+```
 
