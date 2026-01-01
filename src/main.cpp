@@ -44,13 +44,22 @@ worldTile worldGrid[gridHeight][gridWidth] = {
 {Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
 {Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
 {Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall}
-}; 
+};
+
+enum renderTiles {
+	Render_Empty,
+	Render_Wall,
+	Render_Player,
+	Render_Invalid
+};
 
 void ProcessInput();
 
 void Update(Player&);
 
 void Render(const Player&, int);
+
+void GridTile(renderTiles);
 
 void ClearScreen();
 
@@ -125,10 +134,33 @@ void Update(Player& player){
 }
 
 void Render(const Player& player, int frame){
-	std::cout << "Frame: " << frame << std::endl;
-	std::cout << "Player position: (" 
-	          << player.x << ", "
-			  << player.y << ")" << std::endl;
+	for(int row = 0; row < gridHeight; row++)
+	{
+		for(int col = 0; col < gridWidth; col++)
+		{
+			if(row == player.y && col == player.x)
+				GridTile(Render_Player);
+			else
+				switch (worldGrid[row][col])
+				{
+					case Tile_Empty: GridTile(Render_Empty); break;
+					case Tile_Wall: GridTile(Render_Wall); break;
+					default: GridTile(Render_Invalid); break;
+				}
+		}
+		std::cout << std::endl;
+	}
+}
+
+void GridTile(renderTiles renderImg)
+{
+	switch (renderImg)
+	{
+		case Render_Empty: std::cout << " "; break;
+		case Render_Wall: std::cout << "@"; break;
+		case Render_Player: std::cout << "+"; break;
+		default: std::cout << "Invlaid Render State!"; break;
+	}
 }
 
 void ClearScreen()
