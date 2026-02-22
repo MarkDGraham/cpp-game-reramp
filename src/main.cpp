@@ -6,8 +6,7 @@
 #include <chrono>
 #include <cstdlib>
 
-struct Player
-{
+struct Player {
 	int x, y;
 };
 
@@ -18,8 +17,6 @@ enum inputDirection {
 	Input_Left,
 	Input_Right
 };
-
-inputDirection currentDirection = Input_None;
 
 const int gridWidth = 25, gridHeight = 15;
 
@@ -53,29 +50,52 @@ enum renderTiles {
 	Render_Invalid
 };
 
-void ProcessInput();
+enum ActionIntent {
+	Intent_Move,
+	Intent_None
+};
 
-void Update(Player&);
+enum movementActions {
+	Movement_Move,
+	Movement_Block
+};
+
+struct InputIntent {
+	ActionIntent action;
+	inputDirection direction;
+};
+
+enum class MovementResult {
+	Success,
+    OutOfBounds,
+    Blocked
+};
+
+void ProcessInput(InputIntent&);
+
+void Update(Player&, InputIntent&);
 
 void Render(const Player&, int);
 
 void GridTile(renderTiles);
 
+MovementResult MovementResolution(Player&, inputDirection);
+
 void ClearScreen();
 
-int main()
-{
+int main() {
 	bool running = true;
 	int frame = 0;
 	constexpr int FRAME_DELAY_MS = 500;
 	
 	Player player{1, 1};
+	InputIntent intent{Intent_None, Input_None};
 	
 	while (running)
 	{
 		
-		ProcessInput();
-		Update(player);
+		ProcessInput(intent);
+		Update(player, intent);
 		ClearScreen();
 		Render(player, frame++);
 		
@@ -88,52 +108,48 @@ int main()
 	return 0;
 }
 
-void ProcessInput(){
+void ProcessInput(InputIntent& intent) {
 	char input;
 	std::cin >> input;
 	switch (input){
 		case 'w':
-			currentDirection = Input_Up;
+			intent.action = Intent_Move; 
+			intent.direction = Input_Up;
 			break;
 		case 'a':
-			currentDirection = Input_Left;
+			intent.action = Intent_Move;
+			intent.direction = Input_Left;
 			break;
 		case 's':
-			currentDirection = Input_Down;
+			intent.action = Intent_Move;
+			intent.direction = Input_Down;
 			break;
 		case 'd':
-			currentDirection = Input_Right;
+			intent.action = Intent_Move;
+			intent.direction = Input_Right;
 			break;
 		default:
-			currentDirection = Input_None;
+			intent.action = Intent_None;
+			intent.direction = Input_None;
 	}
 }
 
-void Update(Player& player){
-		int targetX = player.x;
-	int targetY = player.y;
-
-	switch (currentDirection)
-	{
-		case Input_Up:    targetY--; break;
-		case Input_Down:  targetY++; break;
-		case Input_Left:  targetX--; break;
-		case Input_Right: targetX++; break;
-		default: break;
+void Update(Player& player, InputIntent& intent) {
+	
+	if(intent.action == Intent_Move) { 
+		MovementResult Outcome = MovementResolution(player, intent.direction);
+		switch (Outcome){
+			case MovementResult::Success: std::cout << "Movement Success!" << std::endl; break;
+			case MovementResult::OutOfBounds: std::cout << "Out of bounds!" << std::endl; break;
+			case MovementResult::Blocked: std::cout << "Movement blocked!" << std::endl; break;
+			default: std::cout << "Invalid Action" << std::endl; break;
+		}
+		
+		intent.action = Intent_None; 
 	}
-
-	if (targetX >= 0 && targetX < gridWidth &&
-	    targetY >= 0 && targetY < gridHeight &&
-	    worldGrid[targetY][targetX] == Tile_Empty)
-	{
-		player.x = targetX;
-		player.y = targetY;
-	}
-
-	currentDirection = Input_None;
 }
 
-void Render(const Player& player, int frame){
+void Render(const Player& player, int frame) {
 	for(int row = 0; row < gridHeight; row++)
 	{
 		for(int col = 0; col < gridWidth; col++)
@@ -152,8 +168,7 @@ void Render(const Player& player, int frame){
 	}
 }
 
-void GridTile(renderTiles renderImg)
-{
+void GridTile(renderTiles renderImg) {
 	switch (renderImg)
 	{
 		case Render_Empty: std::cout << " "; break;
@@ -163,7 +178,30 @@ void GridTile(renderTiles renderImg)
 	}
 }
 
-void ClearScreen()
-{
+MovementResult MovementResolution(Player& player, inputDirection direction) {
+	int targetX = player.x;
+	int targetY = player.y;
+
+	switch (direction) {
+		case Input_Up:    targetY--; break;
+		case Input_Down:  targetY++; break;
+		case Input_Left:  targetX--; break;
+		case Input_Right: targetX++; break;
+		default: break;
+	}
+
+	if(targetX < 0 || targetX >= gridWidth ||
+	    targetY < 0 || targetY >= gridHeight) {
+		return MovementResult::OutOfBounds;
+	} else if(worldGrid[targetY][targetX] != Tile_Empty) {
+		return MovementResult::Blocked;
+	} else {
+		player.x = targetX;
+		player.y = targetY;
+		return MovementResult::Success;
+	}
+}
+
+void ClearScreen() {
 	std::system("clear");
 }
