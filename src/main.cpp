@@ -52,6 +52,7 @@ enum renderTiles {
 
 enum ActionIntent {
 	Intent_Move,
+	Intent_Wait,
 	Intent_None
 };
 
@@ -70,6 +71,8 @@ enum class MovementResult {
     OutOfBounds,
     Blocked
 };
+
+void ResolveWait();
 
 void ProcessInput(InputIntent&);
 
@@ -128,6 +131,10 @@ void ProcessInput(InputIntent& intent) {
 			intent.action = Intent_Move;
 			intent.direction = Input_Right;
 			break;
+		case 'e':
+			intent.action = Intent_Wait;
+			intent.direction = Input_None;
+			break;
 		default:
 			intent.action = Intent_None;
 			intent.direction = Input_None;
@@ -135,18 +142,36 @@ void ProcessInput(InputIntent& intent) {
 }
 
 void Update(Player& player, InputIntent& intent) {
-	
-	if(intent.action == Intent_Move) { 
-		MovementResult Outcome = MovementResolution(player, intent.direction);
-		switch (Outcome){
-			case MovementResult::Success: std::cout << "Movement Success!" << std::endl; break;
-			case MovementResult::OutOfBounds: std::cout << "Out of bounds!" << std::endl; break;
-			case MovementResult::Blocked: std::cout << "Movement blocked!" << std::endl; break;
-			default: std::cout << "Invalid Action" << std::endl; break;
-		}
-		
-		intent.action = Intent_None; 
+	switch(intent.action) { 
+			case Intent_Move: 
+			{
+				MovementResult Outcome = MovementResolution(player, intent.direction);
+				switch (Outcome){
+					case MovementResult::Success: std::cout << 
+						"Movement Success!" << std::endl; break;
+					case MovementResult::OutOfBounds: std::cout << 
+						"Out of bounds!" << std::endl; break;
+					case MovementResult::Blocked: std::cout << 
+						"Movement blocked!" << std::endl; break;
+					default: std::cout << "Invalid Action" 
+						<< std::endl; break;
+				}
+				intent.action = Intent_None;
+				break;
+			}
+			case Intent_Wait:
+			{
+				ResolveWait();
+				intent.action = Intent_None;
+				break;
+			}
+			default:
+				intent.action = Intent_None;
 	}
+}
+
+void ResolveWait() {
+	std::cout << "Wait ..." <<std::endl;
 }
 
 void Render(const Player& player, int frame) {
