@@ -10,104 +10,98 @@ struct Player {
 	int x, y;
 };
 
-enum inputDirection {
-	Input_None,
-	Input_Up,
-	Input_Down,
-	Input_Left,
-	Input_Right
+enum class InputDirection {
+	None,
+	Up,
+	Down,
+	Left,
+	Right
 };
 
 const int gridWidth = 25, gridHeight = 15;
 
-enum worldTile {
-	Tile_Wall,
-	Tile_Empty
+enum class WorldTile {
+	Wall,
+	Empty
 };
 
-worldTile worldGrid[gridHeight][gridWidth] = {
-{Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Empty, Tile_Wall},
-{Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall, Tile_Wall}
+WorldTile worldGrid[gridHeight][gridWidth] = {
+{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall}
 };
 
-enum renderTiles {
-	Render_Empty,
-	Render_Wall,
-	Render_Player,
-	Render_Invalid
+enum class RenderTile {
+	Empty,
+	Wall,
+	Player,
+	Invalid
 };
 
-enum ActionIntent {
-	Intent_Move,
-	Intent_Wait,
-	Intent_None
-};
-
-enum movementActions {
-	Movement_Move,
-	Movement_Block
+enum class ActionIntent {
+	Move,
+	Wait,
+	None
 };
 
 struct InputIntent {
 	ActionIntent action;
-	inputDirection direction;
+	InputDirection direction;
 };
 
 enum class MovementResult {
 	Success,
-    OutOfBounds,
-    Blocked
+	OutOfBounds,
+	Blocked
+};
+
+struct RenderBuffer {
+	RenderTile tile[gridHeight][gridWidth];
 };
 
 void ResolveWait();
-
 void ProcessInput(InputIntent&);
-
 void Update(Player&, InputIntent&);
-
-void Render(const Player&, int);
-
-void GridTile(renderTiles);
-
-MovementResult MovementResolution(Player&, inputDirection);
-
+void Render(const RenderBuffer&);
+void GridTile(RenderTile);
+MovementResult MovementResolution(Player&, InputDirection);
+void BuildRenderBuffer(RenderBuffer& buffer, const Player& player);
 void ClearScreen();
 
 int main() {
 	bool running = true;
-	int frame = 0;
 	constexpr int FRAME_DELAY_MS = 500;
 	
 	Player player{1, 1};
-	InputIntent intent{Intent_None, Input_None};
+	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
 	while (running)
 	{
-		
 		ProcessInput(intent);
 		Update(player, intent);
-		ClearScreen();
-		Render(player, frame++);
 		
+		RenderBuffer buffer;
+		BuildRenderBuffer(buffer, player);
+		
+		ClearScreen();
+		Render(buffer);
 		
 		std::this_thread::sleep_for(
 			std::chrono::milliseconds(FRAME_DELAY_MS)
 		);
 	}
-
 	return 0;
 }
 
@@ -116,111 +110,117 @@ void ProcessInput(InputIntent& intent) {
 	std::cin >> input;
 	switch (input){
 		case 'w':
-			intent.action = Intent_Move; 
-			intent.direction = Input_Up;
+			intent.action = ActionIntent::Move; 
+			intent.direction = InputDirection::Up;
 			break;
 		case 'a':
-			intent.action = Intent_Move;
-			intent.direction = Input_Left;
+			intent.action = ActionIntent::Move;
+			intent.direction = InputDirection::Left;
 			break;
 		case 's':
-			intent.action = Intent_Move;
-			intent.direction = Input_Down;
+			intent.action = ActionIntent::Move;
+			intent.direction = InputDirection::Down;
 			break;
 		case 'd':
-			intent.action = Intent_Move;
-			intent.direction = Input_Right;
+			intent.action = ActionIntent::Move;
+			intent.direction = InputDirection::Right;
 			break;
 		case 'e':
-			intent.action = Intent_Wait;
-			intent.direction = Input_None;
+			intent.action = ActionIntent::Wait;
+			intent.direction = InputDirection::None;
 			break;
 		default:
-			intent.action = Intent_None;
-			intent.direction = Input_None;
+			intent.action = ActionIntent::None;
+			intent.direction = InputDirection::None;
 	}
 }
 
 void Update(Player& player, InputIntent& intent) {
 	switch(intent.action) { 
-			case Intent_Move: 
-			{
-				MovementResult Outcome = MovementResolution(player, intent.direction);
-				switch (Outcome){
-					case MovementResult::Success: std::cout << 
-						"Movement Success!" << std::endl; break;
-					case MovementResult::OutOfBounds: std::cout << 
-						"Out of bounds!" << std::endl; break;
-					case MovementResult::Blocked: std::cout << 
-						"Movement blocked!" << std::endl; break;
-					default: std::cout << "Invalid Action" 
-						<< std::endl; break;
-				}
-				intent.action = Intent_None;
-				break;
-			}
-			case Intent_Wait:
-			{
-				ResolveWait();
-				intent.action = Intent_None;
-				break;
-			}
-			default:
-				intent.action = Intent_None;
+		case ActionIntent::Move: 
+		{
+			MovementResult LastMovementResult =
+				MovementResolution(player, intent.direction);
+			intent.action = ActionIntent::None;
+			break;
+		}
+		case ActionIntent::Wait:
+		{
+			ResolveWait();
+			intent.action = ActionIntent::None;
+			break;
+		}
+		default:
+			intent.action = ActionIntent::None;
 	}
 }
 
-void ResolveWait() {
-	std::cout << "Wait ..." <<std::endl;
-}
-
-void Render(const Player& player, int frame) {
+void BuildRenderBuffer(RenderBuffer& buffer, const Player& player) {
 	for(int row = 0; row < gridHeight; row++)
 	{
 		for(int col = 0; col < gridWidth; col++)
 		{
 			if(row == player.y && col == player.x)
-				GridTile(Render_Player);
+				buffer.tile[row][col] = RenderTile::Player;
 			else
 				switch (worldGrid[row][col])
 				{
-					case Tile_Empty: GridTile(Render_Empty); break;
-					case Tile_Wall: GridTile(Render_Wall); break;
-					default: GridTile(Render_Invalid); break;
+					case WorldTile::Empty: 
+						buffer.tile[row][col] = RenderTile::Empty; 
+						break;
+					case WorldTile::Wall: 
+						buffer.tile[row][col] = RenderTile::Wall; 
+						break;
+					default: 
+						buffer.tile[row][col] = RenderTile::Invalid;
+						break;
 				}
 		}
+	}
+}
+
+void ResolveWait() {
+	return;
+}
+
+void Render(const RenderBuffer& buffer) {
+	for(int row = 0; row < gridHeight; row++) {
+		for(int col = 0; col < gridWidth; col++)
+			GridTile(buffer.tile[row][col]);
 		std::cout << std::endl;
 	}
 }
 
-void GridTile(renderTiles renderImg) {
+void GridTile(RenderTile renderImg) {
 	switch (renderImg)
 	{
-		case Render_Empty: std::cout << " "; break;
-		case Render_Wall: std::cout << "@"; break;
-		case Render_Player: std::cout << "+"; break;
-		default: std::cout << "Invlaid Render State!"; break;
+		case RenderTile::Empty: std::cout << " "; break;
+		case RenderTile::Wall: std::cout << "@"; break;
+		case RenderTile::Player: std::cout << "+"; break;
+		default: std::cout << "Invalid Render State!"; break;
 	}
 }
 
-MovementResult MovementResolution(Player& player, inputDirection direction) {
+MovementResult MovementResolution(Player& player, InputDirection direction) {
 	int targetX = player.x;
 	int targetY = player.y;
 
 	switch (direction) {
-		case Input_Up:    targetY--; break;
-		case Input_Down:  targetY++; break;
-		case Input_Left:  targetX--; break;
-		case Input_Right: targetX++; break;
+		case InputDirection::Up:    targetY--; break;
+		case InputDirection::Down:  targetY++; break;
+		case InputDirection::Left:  targetX--; break;
+		case InputDirection::Right: targetX++; break;
 		default: break;
 	}
 
 	if(targetX < 0 || targetX >= gridWidth ||
-	    targetY < 0 || targetY >= gridHeight) {
+	   targetY < 0 || targetY >= gridHeight) {
 		return MovementResult::OutOfBounds;
-	} else if(worldGrid[targetY][targetX] != Tile_Empty) {
+	}
+	else if(worldGrid[targetY][targetX] != WorldTile::Empty) {
 		return MovementResult::Blocked;
-	} else {
+	}
+	else {
 		player.x = targetX;
 		player.y = targetY;
 		return MovementResult::Success;
@@ -230,3 +230,4 @@ MovementResult MovementResolution(Player& player, inputDirection direction) {
 void ClearScreen() {
 	std::system("clear");
 }
+
