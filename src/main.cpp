@@ -83,7 +83,7 @@ void Update(Player&, InputIntent&);
 void Render(const RenderBuffer&);
 void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection);
-void BuildRenderBuffer(RenderBuffer& buffer, const Player& player);
+void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::vector<Enemy>& enemies);
 void ClearScreen();
 
 int main() {
@@ -91,7 +91,7 @@ int main() {
 	constexpr int FRAME_DELAY_MS = 500;
 	
 	Player player{1, 1};
-	std::vector<Enemy> Enemies = {{5,5}, {3,4}, {6,2}};
+	std::vector<Enemy> enemies = {{5,5}, {3,4}, {6,2}};
 	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
 	while (running)
@@ -100,7 +100,7 @@ int main() {
 		Update(player, intent);
 		
 		RenderBuffer buffer;
-		BuildRenderBuffer(buffer, player);
+		BuildRenderBuffer(buffer, player, enemies);
 		
 		ClearScreen();
 		Render(buffer);
@@ -162,26 +162,30 @@ void Update(Player& player, InputIntent& intent) {
 	}
 }
 
-void BuildRenderBuffer(RenderBuffer& buffer, const Player& player) {
+void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::vector<Enemy>& enemies) {
 	for(int row = 0; row < gridHeight; row++)
 	{
 		for(int col = 0; col < gridWidth; col++)
 		{
+			switch (worldGrid[row][col])
+			{
+				case WorldTile::Empty: 
+					buffer.tile[row][col] = RenderTile::Empty; 
+					break;
+				case WorldTile::Wall: 
+					buffer.tile[row][col] = RenderTile::Wall; 
+					break;
+				default: 
+					buffer.tile[row][col] = RenderTile::Invalid;
+					break;
+			}
+			
 			if(row == player.y && col == player.x)
 				buffer.tile[row][col] = RenderTile::Player;
-			else
-				switch (worldGrid[row][col])
-				{
-					case WorldTile::Empty: 
-						buffer.tile[row][col] = RenderTile::Empty; 
-						break;
-					case WorldTile::Wall: 
-						buffer.tile[row][col] = RenderTile::Wall; 
-						break;
-					default: 
-						buffer.tile[row][col] = RenderTile::Invalid;
-						break;
-				}
+			
+			for(Enemy enemy : enemies)
+				if(row == enemy.y && col == enemy.x)
+					buffer.tile[row][col] = RenderTile::Enemy;
 		}
 	}
 }
@@ -204,6 +208,7 @@ void GridTile(RenderTile renderImg) {
 		case RenderTile::Empty: std::cout << " "; break;
 		case RenderTile::Wall: std::cout << "@"; break;
 		case RenderTile::Player: std::cout << "+"; break;
+		case RenderTile::Enemy: std::cout << "x"; break;
 		default: std::cout << "Invalid Render State!"; break;
 	}
 }
