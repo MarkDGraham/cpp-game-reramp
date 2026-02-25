@@ -52,6 +52,7 @@ enum class RenderTile {
 	Empty,
 	Wall,
 	Player,
+	Enemy,
 	Invalid
 };
 
@@ -90,7 +91,7 @@ int main() {
 	constexpr int FRAME_DELAY_MS = 500;
 	
 	Player player{1, 1};
-	std::vector<Enemy> Enemies;
+	std::vector<Enemy> Enemies = {{5,5}, {3,4}, {6,2}};
 	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
 	while (running)
