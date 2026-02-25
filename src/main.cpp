@@ -10,6 +10,10 @@ struct Player {
 	int x, y;
 };
 
+struct Enemy {
+	int x, y;
+};
+
 enum class InputDirection {
 	None,
 	Up,
