@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <cstdlib>
+#include <vector>
 
 struct Player {
 	int x, y;
@@ -89,6 +90,7 @@ int main() {
 	constexpr int FRAME_DELAY_MS = 500;
 	
 	Player player{1, 1};
+	std::vector<Enemy> Enemies;
 	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
 	while (running)
