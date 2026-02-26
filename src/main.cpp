@@ -92,7 +92,7 @@ int main() {
 	constexpr int FRAME_DELAY_MS = 500;
 	
 	Player player{1, 1};
-	std::vector<Enemy> enemies = {{5,5}, {3,4}, {6,2}};
+	std::vector<Enemy> enemies = {{15,5}, {20,10}, {6,12}};
 	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
 	while (running)
@@ -178,8 +178,7 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
 		stepX += 1;
 	else if(deltaX < 0)
 		stepX -= 1;
-	
-	if(deltaY > 0)
+	else if(deltaY > 0)
 		stepY += 1;
 	else if(deltaY < 0)
 		stepY -= 1;
