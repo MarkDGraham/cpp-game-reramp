@@ -265,11 +265,9 @@ MovementResult MovementResolution(Player& player, InputDirection direction) {
 	if(targetX < 0 || targetX >= gridWidth ||
 	   targetY < 0 || targetY >= gridHeight) {
 		return MovementResult::OutOfBounds;
-	}
-	else if(worldGrid[targetY][targetX] != WorldTile::Empty) {
+	} else if(worldGrid[targetY][targetX] != WorldTile::Empty) {
 		return MovementResult::Blocked;
-	}
-	else {
+	} else {
 		player.x = targetX;
 		player.y = targetY;
 		return MovementResult::Success;
