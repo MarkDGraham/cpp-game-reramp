@@ -191,8 +191,11 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
 	else if(worldGrid[enemy.y + stepY][enemy.x + stepX] !=
 			WorldTile::Empty) {
 		return MovementResult::Blocked;
-	}
-	else {
+	} else if((enemy.x + stepX) == player.x && 
+			  (enemy.y + stepY) == player.y) {
+		std::cout << "Game Over!" << std::endl;
+		std::exit(0);
+	} else {
 		enemy.x += stepX;
 		enemy.y += stepY;
 		return MovementResult::Success;
@@ -220,7 +223,7 @@ void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::ve
 			if(row == player.y && col == player.x)
 				buffer.tile[row][col] = RenderTile::Player;
 			
-			for(Enemy enemy : enemies)
+			for(const Enemy& enemy : enemies)
 				if(row == enemy.y && col == enemy.x)
 					buffer.tile[row][col] = RenderTile::Enemy;
 		}
