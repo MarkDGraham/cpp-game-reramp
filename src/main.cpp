@@ -79,11 +79,12 @@ struct RenderBuffer {
 
 void ResolveWait();
 void ProcessInput(InputIntent&);
-void Update(Player&, InputIntent&);
+MovementResult EnemyMovement(Enemy&, const Player&);
+void Update(Player&, std::vector<Enemy>&, InputIntent&);
 void Render(const RenderBuffer&);
 void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection);
-void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::vector<Enemy>& enemies);
+void BuildRenderBuffer(RenderBuffer&, const Player&, const std::vector<Enemy>&);
 void ClearScreen();
 
 int main() {
@@ -97,7 +98,7 @@ int main() {
 	while (running)
 	{
 		ProcessInput(intent);
-		Update(player, intent);
+		Update(player, enemies, intent);
 		
 		RenderBuffer buffer;
 		BuildRenderBuffer(buffer, player, enemies);
@@ -142,7 +143,7 @@ void ProcessInput(InputIntent& intent) {
 	}
 }
 
-void Update(Player& player, InputIntent& intent) {
+void Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
 	switch(intent.action) { 
 		case ActionIntent::Move: 
 		{
@@ -159,6 +160,43 @@ void Update(Player& player, InputIntent& intent) {
 		}
 		default:
 			intent.action = ActionIntent::None;
+	}
+	
+	for(Enemy& enemy : enemies)
+		MovementResult EnemyMovementResult = 
+			EnemyMovement(enemy, player); 
+}
+
+MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
+	// Calculate trajectory
+	int deltaX = player.x - enemy.x;
+	int deltaY = player.y - enemy.y;
+	
+	int stepX = 0, stepY = 0;
+	
+	if(deltaX > 0)
+		stepX += 1;
+	else if(deltaX < 0)
+		stepX -= 1;
+	
+	if(deltaY > 0)
+		stepY += 1;
+	else if(deltaY < 0)
+		stepY -= 1;
+	
+	// move enemy
+	if((enemy.x + stepX) < 0 || (enemy.x + stepX) >= gridWidth ||
+	   (enemy.y + stepY) < 0 || (enemy.y + stepY) >= gridHeight) {
+		return MovementResult::OutOfBounds;
+	}
+	else if(worldGrid[enemy.y + stepY][enemy.x + stepX] !=
+			WorldTile::Empty) {
+		return MovementResult::Blocked;
+	}
+	else {
+		enemy.x += stepX;
+		enemy.y += stepY;
+		return MovementResult::Success;
 	}
 }
 
