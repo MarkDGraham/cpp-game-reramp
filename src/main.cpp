@@ -94,17 +94,17 @@ void BuildRenderBuffer(RenderBuffer&, const Player&, const std::vector<Enemy>&);
 void ClearScreen();
 
 int main() {
-	bool running = true;
 	constexpr int FRAME_DELAY_MS = 500;
+	EngineState currentState = EngineState::Running;
 	
 	Player player{1, 1};
 	std::vector<Enemy> enemies = {{15,5}, {20,10}, {6,12}};
 	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
-	while (running)
+	while (currentState == EngineState::Running)
 	{
 		ProcessInput(intent);
-		Update(player, enemies, intent);
+		currentState = Update(player, enemies, intent);
 		
 		RenderBuffer buffer;
 		BuildRenderBuffer(buffer, player, enemies);
@@ -116,6 +116,8 @@ int main() {
 			std::chrono::milliseconds(FRAME_DELAY_MS)
 		);
 	}
+	
+	std::cout << "Game Over" << std::endl;
 	return 0;
 }
 
