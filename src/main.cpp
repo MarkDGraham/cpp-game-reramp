@@ -77,6 +77,11 @@ struct RenderBuffer {
 	RenderTile tile[gridHeight][gridWidth];
 };
 
+enum class EngineState {
+	Running,
+	GameOver
+};
+
 void ResolveWait();
 void ProcessInput(InputIntent&);
 MovementResult EnemyMovement(Enemy&, const Player&);
