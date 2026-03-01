@@ -70,6 +70,7 @@ struct InputIntent {
 enum class MovementResult {
 	Success,
 	OutOfBounds,
+	PlayerCaptured,
 	Blocked
 };
 
@@ -198,8 +199,7 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
 		return MovementResult::Blocked;
 	} else if((enemy.x + stepX) == player.x && 
 			  (enemy.y + stepY) == player.y) {
-		std::cout << "Game Over!" << std::endl;
-		std::exit(0);
+		return MovementResult::PlayerCaptured;
 	} else {
 		enemy.x += stepX;
 		enemy.y += stepY;
