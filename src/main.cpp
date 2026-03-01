@@ -86,7 +86,7 @@ enum class EngineState {
 void ResolveWait();
 void ProcessInput(InputIntent&);
 MovementResult EnemyMovement(Enemy&, const Player&);
-void Update(Player&, std::vector<Enemy>&, InputIntent&);
+EngineState Update(Player&, std::vector<Enemy>&, InputIntent&);
 void Render(const RenderBuffer&);
 void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection);
@@ -149,7 +149,7 @@ void ProcessInput(InputIntent& intent) {
 	}
 }
 
-void Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
+EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
 	switch(intent.action) { 
 		case ActionIntent::Move: 
 		{
@@ -168,9 +168,14 @@ void Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
 			intent.action = ActionIntent::None;
 	}
 	
-	for(Enemy& enemy : enemies)
+	for(Enemy& enemy : enemies) {
 		MovementResult EnemyMovementResult = 
-			EnemyMovement(enemy, player); 
+			EnemyMovement(enemy, player);
+		if(EnemyMovementResult == MovementResult::PlayerCaptured)
+			return EngineState::GameOver;
+	}
+	
+	return EngineState::Running;
 }
 
 MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
