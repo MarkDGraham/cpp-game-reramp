@@ -108,8 +108,7 @@ int main() {
 		
 		RenderBuffer buffer;
 		BuildRenderBuffer(buffer, player, enemies);
-		
-		ClearScreen();
+	
 		Render(buffer);
 		
 		std::this_thread::sleep_for(
@@ -247,6 +246,7 @@ void ResolveWait() {
 }
 
 void Render(const RenderBuffer& buffer) {
+	ClearScreen();
 	for(int row = 0; row < gridHeight; row++) {
 		for(int col = 0; col < gridWidth; col++)
 			GridTile(buffer.tile[row][col]);
