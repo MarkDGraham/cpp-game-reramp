@@ -70,6 +70,7 @@ struct InputIntent {
 enum class MovementResult {
 	Success,
 	OutOfBounds,
+	PlayerCaptured,
 	Blocked
 };
 
@@ -77,10 +78,15 @@ struct RenderBuffer {
 	RenderTile tile[gridHeight][gridWidth];
 };
 
+enum class EngineState {
+	Running,
+	GameOver
+};
+
 void ResolveWait();
 void ProcessInput(InputIntent&);
 MovementResult EnemyMovement(Enemy&, const Player&);
-void Update(Player&, std::vector<Enemy>&, InputIntent&);
+EngineState Update(Player&, std::vector<Enemy>&, InputIntent&);
 void Render(const RenderBuffer&);
 void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection);
@@ -88,28 +94,29 @@ void BuildRenderBuffer(RenderBuffer&, const Player&, const std::vector<Enemy>&);
 void ClearScreen();
 
 int main() {
-	bool running = true;
 	constexpr int FRAME_DELAY_MS = 500;
+	EngineState currentState = EngineState::Running;
 	
 	Player player{1, 1};
 	std::vector<Enemy> enemies = {{15,5}, {20,10}, {6,12}};
 	InputIntent intent{ActionIntent::None, InputDirection::None};
 	
-	while (running)
+	while (currentState == EngineState::Running)
 	{
 		ProcessInput(intent);
-		Update(player, enemies, intent);
+		currentState = Update(player, enemies, intent);
 		
 		RenderBuffer buffer;
 		BuildRenderBuffer(buffer, player, enemies);
-		
-		ClearScreen();
+	
 		Render(buffer);
 		
 		std::this_thread::sleep_for(
 			std::chrono::milliseconds(FRAME_DELAY_MS)
 		);
 	}
+	
+	std::cout << "Game Over" << std::endl;
 	return 0;
 }
 
@@ -143,7 +150,7 @@ void ProcessInput(InputIntent& intent) {
 	}
 }
 
-void Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
+EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
 	switch(intent.action) { 
 		case ActionIntent::Move: 
 		{
@@ -162,9 +169,14 @@ void Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
 			intent.action = ActionIntent::None;
 	}
 	
-	for(Enemy& enemy : enemies)
+	for(Enemy& enemy : enemies) {
 		MovementResult EnemyMovementResult = 
-			EnemyMovement(enemy, player); 
+			EnemyMovement(enemy, player);
+		if(EnemyMovementResult == MovementResult::PlayerCaptured)
+			return EngineState::GameOver;
+	}
+	
+	return EngineState::Running;
 }
 
 MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
@@ -193,8 +205,7 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
 		return MovementResult::Blocked;
 	} else if((enemy.x + stepX) == player.x && 
 			  (enemy.y + stepY) == player.y) {
-		std::cout << "Game Over!" << std::endl;
-		std::exit(0);
+		return MovementResult::PlayerCaptured;
 	} else {
 		enemy.x += stepX;
 		enemy.y += stepY;
@@ -235,6 +246,7 @@ void ResolveWait() {
 }
 
 void Render(const RenderBuffer& buffer) {
+	ClearScreen();
 	for(int row = 0; row < gridHeight; row++) {
 		for(int col = 0; col < gridWidth; col++)
 			GridTile(buffer.tile[row][col]);
