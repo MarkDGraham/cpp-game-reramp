@@ -292,4 +292,4 @@ MovementResult MovementResolution(Player& player, InputDirection direction) {
 void ClearScreen() {
 	std::system("clear");
 }
-
+//End of file.
