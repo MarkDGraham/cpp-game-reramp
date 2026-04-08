@@ -30,7 +30,12 @@ enum class WorldTile {
 	Empty
 };
 
-WorldTile worldGrid[gridHeight][gridWidth] = {
+struct World {
+	WorldTile tiles[gridHeight][gridWidth];
+};
+
+World world = {
+	{
 {WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall},
 {WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
 {WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
@@ -45,8 +50,10 @@ WorldTile worldGrid[gridHeight][gridWidth] = {
 {WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
 {WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
 {WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall}
+{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall};
+}
 };
+
 
 enum class RenderTile {
 	Empty,
