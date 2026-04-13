@@ -30,22 +30,25 @@ enum class WorldTile {
 	Empty
 };
 
-WorldTile worldGrid[gridHeight][gridWidth] = {
-{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
-{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall}
+struct World {
+	WorldTile tiles[gridHeight][gridWidth] = 
+	{
+		{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Empty, WorldTile::Wall},
+		{WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall, WorldTile::Wall}
+	};
 };
 
 enum class RenderTile {
@@ -85,12 +88,12 @@ enum class EngineState {
 
 void ResolveWait();
 void ProcessInput(InputIntent&);
-MovementResult EnemyMovement(Enemy&, const Player&);
-EngineState Update(Player&, std::vector<Enemy>&, InputIntent&);
+MovementResult EnemyMovement(Enemy&, const Player&, const World&);
+EngineState Update(Player&, std::vector<Enemy>&, InputIntent&, const World&);
 void Render(const RenderBuffer&);
 void GridTile(RenderTile);
-MovementResult MovementResolution(Player&, InputDirection);
-void BuildRenderBuffer(RenderBuffer&, const Player&, const std::vector<Enemy>&);
+MovementResult MovementResolution(Player&, InputDirection, const World&);
+void BuildRenderBuffer(RenderBuffer&, const Player&, const std::vector<Enemy>&, const World&);
 void ClearScreen();
 
 int main() {
@@ -100,14 +103,15 @@ int main() {
 	Player player{1, 1};
 	std::vector<Enemy> enemies = {{15,5}, {20,10}, {6,12}};
 	InputIntent intent{ActionIntent::None, InputDirection::None};
+	World world;
 	
 	while (currentState == EngineState::Running)
 	{
 		ProcessInput(intent);
-		currentState = Update(player, enemies, intent);
+		currentState = Update(player, enemies, intent, world);
 		
 		RenderBuffer buffer;
-		BuildRenderBuffer(buffer, player, enemies);
+		BuildRenderBuffer(buffer, player, enemies, world);
 	
 		Render(buffer);
 		
@@ -150,12 +154,12 @@ void ProcessInput(InputIntent& intent) {
 	}
 }
 
-EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent) {
+EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent, const World& world) {
 	switch(intent.action) { 
 		case ActionIntent::Move: 
 		{
 			MovementResult LastMovementResult =
-				MovementResolution(player, intent.direction);
+				MovementResolution(player, intent.direction, world);
 			intent.action = ActionIntent::None;
 			break;
 		}
@@ -171,7 +175,7 @@ EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& int
 	
 	for(Enemy& enemy : enemies) {
 		MovementResult EnemyMovementResult = 
-			EnemyMovement(enemy, player);
+			EnemyMovement(enemy, player, world);
 		if(EnemyMovementResult == MovementResult::PlayerCaptured)
 			return EngineState::GameOver;
 	}
@@ -179,7 +183,7 @@ EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& int
 	return EngineState::Running;
 }
 
-MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
+MovementResult EnemyMovement(Enemy& enemy, const Player& player, const World& world) {
 	// Calculate trajectory
 	int deltaX = player.x - enemy.x;
 	int deltaY = player.y - enemy.y;
@@ -200,7 +204,7 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
 	   (enemy.y + stepY) < 0 || (enemy.y + stepY) >= gridHeight) {
 		return MovementResult::OutOfBounds;
 	}
-	else if(worldGrid[enemy.y + stepY][enemy.x + stepX] !=
+	else if(world.tiles[enemy.y + stepY][enemy.x + stepX] !=
 			WorldTile::Empty) {
 		return MovementResult::Blocked;
 	} else if((enemy.x + stepX) == player.x && 
@@ -213,12 +217,12 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player) {
 	}
 }
 
-void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::vector<Enemy>& enemies) {
+void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::vector<Enemy>& enemies, const World& world) {
 	for(int row = 0; row < gridHeight; row++)
 	{
 		for(int col = 0; col < gridWidth; col++)
 		{
-			switch (worldGrid[row][col])
+			switch (world.tiles[row][col])
 			{
 				case WorldTile::Empty: 
 					buffer.tile[row][col] = RenderTile::Empty; 
@@ -265,7 +269,7 @@ void GridTile(RenderTile renderImg) {
 	}
 }
 
-MovementResult MovementResolution(Player& player, InputDirection direction) {
+MovementResult MovementResolution(Player& player, InputDirection direction, const World& world) {
 	int targetX = player.x;
 	int targetY = player.y;
 
@@ -280,7 +284,7 @@ MovementResult MovementResolution(Player& player, InputDirection direction) {
 	if(targetX < 0 || targetX >= gridWidth ||
 	   targetY < 0 || targetY >= gridHeight) {
 		return MovementResult::OutOfBounds;
-	} else if(worldGrid[targetY][targetX] != WorldTile::Empty) {
+	} else if(world.tiles[targetY][targetX] != WorldTile::Empty) {
 		return MovementResult::Blocked;
 	} else {
 		player.x = targetX;
