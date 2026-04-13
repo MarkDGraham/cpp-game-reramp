@@ -86,32 +86,41 @@ enum class EngineState {
 	GameOver
 };
 
+struct GameState {
+	Player player;
+	std::vector<Enemy> enemies;
+	World world;
+	InputIntent intent;
+	EngineState state;
+};
+
 void ResolveWait();
 void ProcessInput(InputIntent&);
 MovementResult EnemyMovement(Enemy&, const Player&, const World&);
-EngineState Update(Player&, std::vector<Enemy>&, InputIntent&, const World&);
+EngineState Update(GameState&);
 void Render(const RenderBuffer&);
 void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection, const World&);
-void BuildRenderBuffer(RenderBuffer&, const Player&, const std::vector<Enemy>&, const World&);
+void BuildRenderBuffer(RenderBuffer&, const GameState&);
 void ClearScreen();
 
 int main() {
 	constexpr int FRAME_DELAY_MS = 500;
-	EngineState currentState = EngineState::Running;
+	GameState currState {
+	{1,1},
+	{{15,5}, {20,10}, {6,12}},
+	World{},
+	{ActionIntent::None, InputDirection::None},
+	EngineState::Running
+	};
 	
-	Player player{1, 1};
-	std::vector<Enemy> enemies = {{15,5}, {20,10}, {6,12}};
-	InputIntent intent{ActionIntent::None, InputDirection::None};
-	World world;
-	
-	while (currentState == EngineState::Running)
+	while (currState.state == EngineState::Running)
 	{
-		ProcessInput(intent);
-		currentState = Update(player, enemies, intent, world);
+		ProcessInput(currState.intent);
+		currState.state = Update(currState);
 		
 		RenderBuffer buffer;
-		BuildRenderBuffer(buffer, player, enemies, world);
+		BuildRenderBuffer(buffer, currState);
 	
 		Render(buffer);
 		
@@ -154,28 +163,28 @@ void ProcessInput(InputIntent& intent) {
 	}
 }
 
-EngineState Update(Player& player, std::vector<Enemy>& enemies, InputIntent& intent, const World& world) {
-	switch(intent.action) { 
+EngineState Update(GameState& currentGameState) {
+	switch(currentGameState.intent.action) { 
 		case ActionIntent::Move: 
 		{
 			MovementResult LastMovementResult =
-				MovementResolution(player, intent.direction, world);
-			intent.action = ActionIntent::None;
+				MovementResolution(currentGameState.player, currentGameState.intent.direction, currentGameState.world);
+			currentGameState.intent.action = ActionIntent::None;
 			break;
 		}
 		case ActionIntent::Wait:
 		{
 			ResolveWait();
-			intent.action = ActionIntent::None;
+			currentGameState.intent.action = ActionIntent::None;
 			break;
 		}
 		default:
-			intent.action = ActionIntent::None;
+			currentGameState.intent.action = ActionIntent::None;
 	}
 	
-	for(Enemy& enemy : enemies) {
+	for(Enemy& enemy : currentGameState.enemies) {
 		MovementResult EnemyMovementResult = 
-			EnemyMovement(enemy, player, world);
+			EnemyMovement(enemy, currentGameState.player, currentGameState.world);
 		if(EnemyMovementResult == MovementResult::PlayerCaptured)
 			return EngineState::GameOver;
 	}
@@ -217,12 +226,12 @@ MovementResult EnemyMovement(Enemy& enemy, const Player& player, const World& wo
 	}
 }
 
-void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::vector<Enemy>& enemies, const World& world) {
+void BuildRenderBuffer(RenderBuffer& buffer, const GameState& currentGameState) {
 	for(int row = 0; row < gridHeight; row++)
 	{
 		for(int col = 0; col < gridWidth; col++)
 		{
-			switch (world.tiles[row][col])
+			switch (currentGameState.world.tiles[row][col])
 			{
 				case WorldTile::Empty: 
 					buffer.tile[row][col] = RenderTile::Empty; 
@@ -235,10 +244,10 @@ void BuildRenderBuffer(RenderBuffer& buffer, const Player& player, const std::ve
 					break;
 			}
 			
-			if(row == player.y && col == player.x)
+			if(row == currentGameState.player.y && col == currentGameState.player.x)
 				buffer.tile[row][col] = RenderTile::Player;
 			
-			for(const Enemy& enemy : enemies)
+			for(const Enemy& enemy : currentGameState.enemies)
 				if(row == enemy.y && col == enemy.x)
 					buffer.tile[row][col] = RenderTile::Enemy;
 		}
