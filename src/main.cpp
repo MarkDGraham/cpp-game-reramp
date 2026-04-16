@@ -104,6 +104,8 @@ MovementResult MovementResolution(Player&, InputDirection, const World&);
 void BuildRenderBuffer(RenderBuffer&, const GameState&);
 void ClearScreen();
 void HandlePlayerAction(GameState&);
+bool UpdateEnemies(GameState&);
+void CheckGameOver(GameState&, bool);
 
 int main() {
 	constexpr int FRAME_DELAY_MS = 500;
@@ -166,14 +168,9 @@ void ProcessInput(InputIntent& intent) {
 
 EngineState Update(GameState& currentGameState) {
 	HandlePlayerAction(currentGameState);
-	for(Enemy& enemy : currentGameState.enemies) {
-		MovementResult EnemyMovementResult = 
-			EnemyMovement(enemy, currentGameState.player, currentGameState.world);
-		if(EnemyMovementResult == MovementResult::PlayerCaptured)
-			return EngineState::GameOver;
-	}
-	
-	return EngineState::Running;
+	bool captured = UpdateEnemies(currentGameState);
+	CheckGameOver(currentGameState, captured);
+	return currentGameState.state;
 }
 
 MovementResult EnemyMovement(Enemy& enemy, const Player& player, const World& world) {
@@ -309,5 +306,21 @@ void HandlePlayerAction(GameState& state)
 		default:
 			state.intent.action = ActionIntent::None;
 	}
+}
+
+bool UpdateEnemies(GameState& state)
+{
+	for(Enemy& enemy : state.enemies)
+	{
+		if(EnemyMovement(enemy, state.player, state.world) == MovementResult::PlayerCaptured)
+			return true;
+	}
+	return false;
+}
+
+void CheckGameOver(GameState& state, bool playerCaptured)
+{
+	if(playerCaptured)
+		state.state = EngineState::GameOver;
 }
 //End of file.
