@@ -103,6 +103,7 @@ void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection, const World&);
 void BuildRenderBuffer(RenderBuffer&, const GameState&);
 void ClearScreen();
+void HandlePlayerAction(GameState&);
 
 int main() {
 	constexpr int FRAME_DELAY_MS = 500;
@@ -164,24 +165,7 @@ void ProcessInput(InputIntent& intent) {
 }
 
 EngineState Update(GameState& currentGameState) {
-	switch(currentGameState.intent.action) { 
-		case ActionIntent::Move: 
-		{
-			MovementResult LastMovementResult =
-				MovementResolution(currentGameState.player, currentGameState.intent.direction, currentGameState.world);
-			currentGameState.intent.action = ActionIntent::None;
-			break;
-		}
-		case ActionIntent::Wait:
-		{
-			ResolveWait();
-			currentGameState.intent.action = ActionIntent::None;
-			break;
-		}
-		default:
-			currentGameState.intent.action = ActionIntent::None;
-	}
-	
+	HandlePlayerAction(currentGameState);
 	for(Enemy& enemy : currentGameState.enemies) {
 		MovementResult EnemyMovementResult = 
 			EnemyMovement(enemy, currentGameState.player, currentGameState.world);
@@ -304,5 +288,26 @@ MovementResult MovementResolution(Player& player, InputDirection direction, cons
 
 void ClearScreen() {
 	std::system("clear");
+}
+
+void HandlePlayerAction(GameState& state)
+{
+	switch(state.intent.action) { 
+		case ActionIntent::Move: 
+		{
+			MovementResult LastMovementResult =
+				MovementResolution(state.player, state.intent.direction, state.world);
+			state.intent.action = ActionIntent::None;
+			break;
+		}
+		case ActionIntent::Wait:
+		{
+			ResolveWait();
+			state.intent.action = ActionIntent::None;
+			break;
+		}
+		default:
+			state.intent.action = ActionIntent::None;
+	}
 }
 //End of file.
