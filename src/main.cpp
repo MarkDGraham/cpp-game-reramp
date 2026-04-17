@@ -86,12 +86,22 @@ enum class EngineState {
 	GameOver
 };
 
+enum class EventType {
+	PlayerCaptured,
+	None
+};
+
+struct Event {
+	EventType type;
+};
+
 struct GameState {
 	Player player;
 	std::vector<Enemy> enemies;
 	World world;
 	InputIntent intent;
 	EngineState state;
+	std::vector<Event> events;
 };
 
 void ResolveWait();
