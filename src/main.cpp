@@ -180,7 +180,8 @@ void ProcessInput(InputIntent& intent) {
 EngineState Update(GameState& currentGameState) {
 	HandlePlayerAction(currentGameState);
 	UpdateEnemies(currentGameState);
-	//CheckGameOver(currentGameState);
+	ProcessEvents(currentGameState);
+	currentGameState.events.clear();
 	return currentGameState.state;
 }
 
@@ -302,12 +303,14 @@ void ProcessEvents(GameState& state)
 {
 	for(const Event& event : state.events)
 	{
-		switch (event.type):
+		switch (event.type)
+		{
 			case EventType::PlayerCaptured:
 				state.state = EngineState::GameOver;
 				break;
 			default:
 				break;
+		}
 	}
 }
 
