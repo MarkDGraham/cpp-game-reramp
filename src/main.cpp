@@ -113,6 +113,7 @@ void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection, const World&);
 void BuildRenderBuffer(RenderBuffer&, const GameState&);
 void ClearScreen();
+void ProcessEvents(GameState&);
 void HandlePlayerAction(GameState&);
 void UpdateEnemies(GameState&);
 void CheckGameOver(GameState&, bool);
@@ -295,6 +296,19 @@ MovementResult MovementResolution(Player& player, InputDirection direction, cons
 
 void ClearScreen() {
 	std::system("clear");
+}
+
+void ProcessEvents(GameState& state)
+{
+	for(const Event& event : state.events)
+	{
+		switch (event.type):
+			case EventType::PlayerCaptured:
+				state.state = EngineState::GameOver;
+				break;
+			default:
+				break;
+	}
 }
 
 void HandlePlayerAction(GameState& state)
