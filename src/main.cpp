@@ -86,12 +86,22 @@ enum class EngineState {
 	GameOver
 };
 
+enum class EventType {
+	PlayerCaptured,
+	None
+};
+
+struct Event {
+	EventType type;
+};
+
 struct GameState {
 	Player player;
 	std::vector<Enemy> enemies;
 	World world;
 	InputIntent intent;
 	EngineState state;
+	std::vector<Event> events;
 };
 
 void ResolveWait();
@@ -103,8 +113,9 @@ void GridTile(RenderTile);
 MovementResult MovementResolution(Player&, InputDirection, const World&);
 void BuildRenderBuffer(RenderBuffer&, const GameState&);
 void ClearScreen();
+void ProcessEvents(GameState&);
 void HandlePlayerAction(GameState&);
-bool UpdateEnemies(GameState&);
+void UpdateEnemies(GameState&);
 void CheckGameOver(GameState&, bool);
 
 int main() {
@@ -168,8 +179,9 @@ void ProcessInput(InputIntent& intent) {
 
 EngineState Update(GameState& currentGameState) {
 	HandlePlayerAction(currentGameState);
-	bool captured = UpdateEnemies(currentGameState);
-	CheckGameOver(currentGameState, captured);
+	UpdateEnemies(currentGameState);
+	ProcessEvents(currentGameState);
+	currentGameState.events.clear();
 	return currentGameState.state;
 }
 
@@ -287,6 +299,21 @@ void ClearScreen() {
 	std::system("clear");
 }
 
+void ProcessEvents(GameState& state)
+{
+	for(const Event& event : state.events)
+	{
+		switch (event.type)
+		{
+			case EventType::PlayerCaptured:
+				state.state = EngineState::GameOver;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
 void HandlePlayerAction(GameState& state)
 {
 	switch(state.intent.action) { 
@@ -308,14 +335,13 @@ void HandlePlayerAction(GameState& state)
 	}
 }
 
-bool UpdateEnemies(GameState& state)
+void UpdateEnemies(GameState& state)
 {
 	for(Enemy& enemy : state.enemies)
 	{
 		if(EnemyMovement(enemy, state.player, state.world) == MovementResult::PlayerCaptured)
-			return true;
+			state.events.push_back({EventType::PlayerCaptured});
 	}
-	return false;
 }
 
 void CheckGameOver(GameState& state, bool playerCaptured)
